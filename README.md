@@ -1,7 +1,8 @@
+# hostname
+
 ## Usage
 
-
-To set and persist a hostname, set `node['net']['hostname']` and, optionally, `node['net']['FQDN']` attributes and include `recipe[hostname]` in your run_list.
+To set and persist a hostname, set `node['net']['hostname']` and optionally `node['net']['FQDN']` attributes and include `recipe[hostname]` in your run_list.
 
 ## Requirements
 
