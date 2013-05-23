@@ -1,3 +1,4 @@
+name             'hostname'
 maintainer       'Vasily Mikhaylichenko'
 maintainer_email 'vasily.mikhaylichenko+github@gmail.com'
 license          'BSD'
