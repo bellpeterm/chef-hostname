@@ -4,17 +4,17 @@ driver_plugin: vagrant
 platforms:
 - name: debian-7.0
   driver_config:
-    box: wheezy
-    box_url: https://dl.dropboxusercontent.com/s/xymcvez85i29lym/vagrant-debian-wheezy64.box
+    box: opscode-debian-7.0
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_debian-7.0.0_provisionerless.box
     require_chef_omnibus: true
 - name: centos-6.4
   driver_config:
-    box: centos64
+    box: opscode-centos-6.4
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
     require_chef_omnibus: true
 - name: gentoo-2013.05
   driver_config:
-    box: gentoo-2013.05
+    box: lxmx-gentoo-2013.05
     box_url: https://dl.dropboxusercontent.com/s/6rtn52ipg0pagy6/gentoo-amd64-2013.05-squashfs.box
 
 suites:
