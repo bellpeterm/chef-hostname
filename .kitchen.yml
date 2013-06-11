@@ -15,7 +15,7 @@ platforms:
 - name: gentoo-2013.05
   driver_config:
     box: lxmx-gentoo-2013.05
-    box_url: https://dl.dropboxusercontent.com/s/6rtn52ipg0pagy6/gentoo-amd64-2013.05-squashfs.box
+    box_url: https://lxmx-vm.s3.amazonaws.com/vagrant/boxes/lxmx_gentoo-2013.05_chef-11.4.4.box
 
 suites:
 - name: default
