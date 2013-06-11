@@ -2,10 +2,10 @@
 driver_plugin: vagrant
 
 platforms:
-- name: debian-7.0
+- name: ubuntu-13.04
   driver_config:
-    box: opscode-debian-7.0
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_debian-7.0.0_provisionerless.box
+    box: opscode-ubuntu-13.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-13.04_provisionerless.box
     require_chef_omnibus: true
 - name: centos-6.4
   driver_config:
@@ -20,7 +20,7 @@ platforms:
 suites:
 - name: default
   run_list:
-  - recipe[hostname]
+  - recipe[lxmx-hostname]
   attributes:
     net:
       IP: 10.0.2.15

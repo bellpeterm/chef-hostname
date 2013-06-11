@@ -1,8 +1,10 @@
-# hostname
+# lxmx-hostname
 
 ## Usage
 
-To set and persist a hostname, set `node['net']['hostname']` and optionally `node['net']['FQDN']` attributes and include `recipe[hostname]` in your run_list.
+* To set and persist a hostname, set `node['net']['hostname']`.
+* To set and persist an FQDN, set `node['net']['FQDN']` and `node['net']['IP']`.
+* Then include `recipe[lxmx-hostname]` in your run_list.
 
 ## Requirements
 
@@ -20,7 +22,7 @@ The following platforms are supported by the cookbook:
 
 This cookbook depends on the following external cookbooks:
 
-* [hosts](https://github.com/lxmx-cookbooks/hosts)
+* hostsfile - [github](https://github.com/customink-webops/hostsfile), [community](http://community.opscode.com/cookbooks/hostsfile).
 
 ## Recipes
 
@@ -31,12 +33,12 @@ Sets and persists node hostname using different approaches on different platform
 ## Attributes
 
 * `node['net']['hostname']` - node hostname to set and persist.
-
-* `node['net']['FQDN']` - an optional additional entry for `/etc/hosts`.
+* `node['net']['FQDN']` - (optional) node FQDN to set and persist.
+* `node['net']['IP']`- node IP address, set if you're setting an FQDN.
 
 ## License
 
-Copyright:: Vasily Mikhaylichenko.
+Copyright:: Vasily Mikhaylichenko and LxMx.
 
 Licensed under BSD license.
 

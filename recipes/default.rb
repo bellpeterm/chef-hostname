@@ -1,56 +1,66 @@
-if node['net']
-  fqdn     = node['net']['FQDN'] || ''
-  hostname = node['net']['hostname']
-  ip = node['net']['IP']
+ohai 'reload' do
+  action :nothing
+end
 
-  if node['hostname'] != hostname
+if node['net']
+  fqdn         = node['net']['FQDN']
+  the_hostname = node['net']['hostname']
+  ip           = node['net']['IP']
+
+  if node['hostname'] != the_hostname
+    # Update the hostname
     case node['platform']
     when 'ubuntu', 'debian'
       file '/etc/hostname' do
-        content "#{hostname}\n"
+        content "#{the_hostname}\n"
         mode '0644'
       end
     when 'redhat', 'centos'
       ruby_block 'edit /etc/sysconfig/network' do
         block do
           rc = Chef::Util::FileEdit.new('/etc/sysconfig/network')
-          rc.search_file_replace_line(/^HOSTNAME/, "HOSTNAME=#{hostname}")
+          rc.search_file_replace_line(/^HOSTNAME/, "HOSTNAME=#{the_hostname}")
           rc.write_file
         end
       end
     when 'gentoo'
       file '/etc/conf.d/hostname' do
-        content "HOSTNAME=\"#{hostname}\"\n"
+        content "HOSTNAME=\"#{the_hostname}\"\n"
       end
     end
 
-    execute "hostname #{hostname}" do
+    hostsfile_entry '127.0.0.1' do
+      hostname the_hostname
+      aliases ['localhost', 'localhost.localdomain']
+    end
+
+    execute "hostname #{the_hostname}" do
       notifies :reload, 'ohai[reload]'
     end
+  end
 
-    ohai 'reload' do
-      action :nothing
+  if node['fqdn'] != fqdn
+    # Update the FQDN
+    case node['platform']
+    when 'ubuntu', 'debian'
+      hostsfile_entry '127.0.1.1' do
+        hostname fqdn
+        aliases [ the_hostname ]
+      end
+    when 'redhat', 'centos'
+      hostsfile_entry ip do
+        hostname fqdn
+        aliases [ the_hostname ]
+      end
+    when 'gentoo'
+      hostsfile_entry '127.0.0.1' do
+        hostname fqdn
+        aliases [ the_hostname, 'localhost.localdomain', 'localhost' ]
+      end
     end
-  end
 
-  host_entries = case node['platform']
-  when 'ubuntu', 'debian'
-    [
-      "127.0.0.1 localhost localhost.localdomain",
-      "127.0.1.1 #{fqdn} #{hostname}"
-    ]
-  when 'redhat', 'centos'
-    [
-      "127.0.0.1 localhost",
-      "#{ip} #{fqdn} #{hostname}"
-    ]
-  when 'gentoo'
-    [
-      "127.0.0.1 #{fqdn} #{hostname} localhost.localdomain localhost"
-    ]
-  end
-
-  host_entries.each do |host_entry|
-    hosts_entry host_entry
+    execute "true" do
+      notifies :reload, 'ohai[reload]'
+    end
   end
 end

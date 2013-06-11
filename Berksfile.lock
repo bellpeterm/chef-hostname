@@ -1,2 +1,0 @@
-cookbook 'hostname', :path => '.'
-cookbook 'hosts', :locked_version => '0.1.1'
