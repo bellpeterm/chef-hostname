@@ -1,3 +1,7 @@
+## 0.3.5 / 2013-06-12
+
+Update the name to use underscore (to fix potential Chef resource naming problem).
+
 ## 0.3.4 / 2013-06-11
 
 Change to using the `hostsfile` cookbook.

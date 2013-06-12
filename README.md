@@ -1,10 +1,10 @@
-# lxmx-hostname
+# lxmx_hostname
 
 ## Usage
 
 * To set and persist a hostname, set `node['net']['hostname']`.
 * To set and persist an FQDN, set `node['net']['FQDN']` and `node['net']['IP']`.
-* Then include `recipe[lxmx-hostname]` in your run_list.
+* Then include `recipe[lxmx_hostname]` in your run_list.
 
 ## Requirements
 
