@@ -20,7 +20,7 @@ platforms:
 suites:
 - name: default
   run_list:
-  - recipe[lxmx-hostname]
+  - recipe[lxmx_hostname]
   attributes:
     net:
       IP: 10.0.2.15
