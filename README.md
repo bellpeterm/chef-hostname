@@ -1,4 +1,5 @@
 # lxmx_hostname
+[![Build Status](https://travis-ci.org/lxmx/chef-hostname.png?branch=master)](https://travis-ci.org/lxmx/chef-hostname)
 
 ## Usage
 
