@@ -39,7 +39,7 @@ if node['net']
     end
   end
 
-  if node['fqdn'] != fqdn
+  if fqdn && node['fqdn'] != fqdn
     # Update the FQDN
     case node['platform']
     when 'ubuntu', 'debian'
