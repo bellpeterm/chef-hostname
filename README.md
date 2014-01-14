@@ -9,15 +9,13 @@
 
 ## Requirements
 
-### Platform
+### Platform Families
 
-The following platforms are supported by the cookbook:
+The following platform families are supported by the cookbook:
 
-* ubuntu
-* debian
-* centos
-* redhat
-* gentoo
+* debian - Debian, Linux Mint, Ubuntu
+* rhel - Amazon Linux, CentOS, Oracle Linux, Scientific Linux, Red Hat Enterprise Linux
+* gentoo - Gentoo
 
 ### Cookbooks
 
