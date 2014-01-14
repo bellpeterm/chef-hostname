@@ -9,13 +9,13 @@ if node['net']
 
   if node['hostname'] != the_hostname
     # Update the hostname
-    case node['platform']
-    when 'ubuntu', 'debian'
+    case node['platform_family']
+    when 'debian'
       file '/etc/hostname' do
         content "#{the_hostname}\n"
         mode '0644'
       end
-    when 'redhat', 'centos'
+    when 'rhel'
       ruby_block 'edit /etc/sysconfig/network' do
         block do
           rc = Chef::Util::FileEdit.new('/etc/sysconfig/network')
@@ -41,13 +41,13 @@ if node['net']
 
   if fqdn && node['fqdn'] != fqdn
     # Update the FQDN
-    case node['platform']
-    when 'ubuntu', 'debian'
+    case node['platform_family']
+    when 'debian'
       hostsfile_entry '127.0.1.1' do
         hostname fqdn
         aliases [ the_hostname ]
       end
-    when 'redhat', 'centos'
+    when 'rhel'
       hostsfile_entry ip do
         hostname fqdn
         aliases [ the_hostname ]
