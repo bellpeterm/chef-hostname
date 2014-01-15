@@ -30,7 +30,6 @@ if node['net']
     end
 
     hostsfile_entry '127.0.0.1' do
-      hostname the_hostname
       aliases ['localhost', 'localhost.localdomain']
     end
 
