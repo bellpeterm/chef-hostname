@@ -3,9 +3,9 @@ ohai 'reload' do
 end
 
 if node['net']
-  fqdn         = node['net']['FQDN']
+  fqdn         = node['net']['fqdn']
   the_hostname = node['net']['hostname']
-  ip           = node['net']['IP']
+  ip           = node['net']['ip']
 
   if node['hostname'] != the_hostname
     # Update the hostname
@@ -43,6 +43,10 @@ if node['net']
     # Update the FQDN
     case node['platform_family']
     when 'debian'
+      hostsfile_entry ip do
+        hostname fqdn
+        aliases [ the_hostname ]
+      end
       hostsfile_entry '127.0.1.1' do
         hostname fqdn
         aliases [ the_hostname ]
