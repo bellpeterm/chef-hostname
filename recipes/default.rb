@@ -12,14 +12,14 @@ if node['net']
     case node['platform']
     when 'ubuntu', 'debian'
       file '/etc/hostname' do
-        content "#{the_hostname}\n"
+        content "#{fqdn}\n"
         mode '0644'
       end
     when 'redhat', 'centos'
       ruby_block 'edit /etc/sysconfig/network' do
         block do
           rc = Chef::Util::FileEdit.new('/etc/sysconfig/network')
-          rc.search_file_replace_line(/^HOSTNAME/, "HOSTNAME=#{the_hostname}")
+          rc.search_file_replace_line(/^HOSTNAME/, "HOSTNAME=#{fqdn}")
           rc.write_file
         end
       end
@@ -34,8 +34,8 @@ if node['net']
       aliases ['localhost', 'localhost.localdomain']
     end
 
-    execute "hostname #{the_hostname}" do
-      notifies :reload, 'ohai[reload]'
+    execute "hostname #{fqdn}" do
+      notifies :reload, 'ohai[reload]', :immediately
     end
   end
 
@@ -60,7 +60,7 @@ if node['net']
     end
 
     execute "true" do
-      notifies :reload, 'ohai[reload]'
+      notifies :reload, 'ohai[reload]', :immediately
     end
   end
 end
