@@ -7,7 +7,6 @@ if node['net']
   the_hostname = node['net']['hostname']
   ip           = node['net']['ip']
 
-<<<<<<< HEAD
   # Update the hostname
   case node['platform_family']
   when 'debian'
