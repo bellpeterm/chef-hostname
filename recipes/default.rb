@@ -3,19 +3,20 @@ ohai 'reload' do
 end
 
 if node['net']
-  fqdn         = node['net']['FQDN']
+  fqdn         = node['net']['fqdn']
   the_hostname = node['net']['hostname']
-  ip           = node['net']['IP']
+  ip           = node['net']['ip']
 
+<<<<<<< HEAD
   # Update the hostname
-  case node['platform']
-  when 'ubuntu', 'debian'
+  case node['platform_family']
+  when 'debian'
     file '/etc/hostname' do
       content "#{fqdn}\n"
       mode '0644'
       not_if { open('/etc/sysconfig/network') { |f| f.grep(/string/) } }
     end
-  when 'redhat', 'centos'
+  when 'rhel'
     ruby_block 'edit /etc/sysconfig/network' do
       block do
         rc = Chef::Util::FileEdit.new('/etc/sysconfig/network')
@@ -32,8 +33,8 @@ if node['net']
   end
 
   hostsfile_entry '127.0.0.1' do
-    hostname the_hostname
-    aliases ['localhost', 'localhost.localdomain']
+    hostname 'localhost'
+    aliases ['localhost.localdomain']
   end
 
   execute "hostname #{fqdn}" do

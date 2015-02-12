@@ -1,3 +1,6 @@
+## 0.3.7 / 2014-01-14
+Changed platform to platform_family for compatibility
+
 ## 0.3.6 / 2013-06-12
 Fix the bug with non-present FQDN.
 
