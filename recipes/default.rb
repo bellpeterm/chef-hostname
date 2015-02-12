@@ -3,11 +3,13 @@ ohai 'reload' do
 end
 
 if node['net']
+  require 'resolv'
+
   fqdn         = node['net']['FQDN']
   the_hostname = node['net']['hostname']
   ip           = node['net']['IP']
 
-  if node['hostname'] != the_hostname
+  if node['hostname'] != the_hostname || node['fqdn'] != fqdn
     # Update the hostname
     case node['platform']
     when 'ubuntu', 'debian'
@@ -39,27 +41,28 @@ if node['net']
     end
   end
 
-  if fqdn && node['fqdn'] != fqdn
-    # Update the FQDN
-    case node['platform']
-    when 'ubuntu', 'debian'
-      hostsfile_entry '127.0.1.1' do
-        hostname fqdn
-        aliases [ the_hostname ]
-      end
-    when 'redhat', 'centos'
-      hostsfile_entry ip do
-        hostname fqdn
-        aliases [ the_hostname ]
-      end
-    when 'gentoo'
-      hostsfile_entry '127.0.0.1' do
-        hostname fqdn
-        aliases [ the_hostname, 'localhost.localdomain', 'localhost' ]
-      end
-    end
+  resolver = Resolv::DNS.new
 
-    execute "true" do
+  case node['platform']
+  when 'ubuntu', 'debian'
+    hostsfile_entry '127.0.1.1' do
+      hostname fqdn
+      aliases [ the_hostname ]
+      not_if { resolver.getaddress(fqdn).to_s.match(/127\.0/) }
+      notifies :reload, 'ohai[reload]', :immediately
+    end
+  when 'redhat', 'centos'
+    hostsfile_entry ip do
+      hostname fqdn
+      aliases [ the_hostname ]
+      not_if { resolver.getaddress(fqdn).to_s.match(ip) }
+      notifies :reload, 'ohai[reload]', :immediately
+    end
+  when 'gentoo'
+    hostsfile_entry '127.0.0.1' do
+      hostname fqdn
+      aliases [ the_hostname, 'localhost.localdomain', 'localhost' ]
+      not_if { resolver.getaddress(fqdn).to_s.match(/127\.0/) }
       notifies :reload, 'ohai[reload]', :immediately
     end
   end
