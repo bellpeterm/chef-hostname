@@ -1,3 +1,5 @@
-site :opscode
+https://supermarket.chef.io
 
 metadata
+
+cookbook 'hostsfile'
